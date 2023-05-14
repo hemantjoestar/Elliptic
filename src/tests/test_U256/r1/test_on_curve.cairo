@@ -1,6 +1,7 @@
 use ec_verify::curves::U256::u256_common;
 use ec_verify::curves::U256::r1_point::R1CurveParameters;
-use ec_verify::curves::curve_traits::{ECCurveTraitsImpl, CurvePoint};
+use ec_verify::curves::curve_traits::{CurvePoint};
+use ec_verify::curves::double_and_add::ECCurveTraitsImpl;
 use option::OptionTrait;
 use result::ResultTrait;
 use debug::PrintTrait;
