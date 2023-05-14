@@ -22,6 +22,9 @@ impl U256ConstantsImpl of TYPEConstants<u256> {
     fn TWO() -> u256 {
         U256_constants::TWO
     }
+    fn THREE() -> u256 {
+        U256_constants::THREE
+    }
 }
 
 impl U256Zeroable of Zeroable<u256> {

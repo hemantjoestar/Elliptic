@@ -15,6 +15,9 @@ impl ECCurveTraitsImpl<
     impl TRem: Rem<T>,
     impl TDiv: Div<T>,
     impl TPartialEq: PartialEq<T>,
+    // TODO: Fix this. i think becuae egcd doesnt take traits 
+    impl TIntoGCD: Into<T, u256>,
+    impl GCDIntoT: Into<u256, T>,
     impl TModA: ModularArithmetic<T>,
     impl CParams: CurveParameters<T>,
     impl TZero: Zeroable<T>,
@@ -49,9 +52,10 @@ impl CurvePointAdd<
     impl TDiv: Div<T>,
     // TODO: Fix this. i think becuae egcd doesnt take traits 
     // Breaks Everything by autousing concrete type of felt
-    // impl TIntoGCD: TryInto<T, u256>,
+    impl TIntoGCD: Into<T, u256>,
+    impl GCDIntoT: Into<u256, T>,
     // impl GCDintoT: TryInto<u256, T>,
-    // TODO: Fix bove
+    // TODO: Fix above
     impl TPartialEq: PartialEq<T>,
     impl TModA: ModularArithmetic<T>,
     impl CParams: CurveParameters<T>,
@@ -66,13 +70,22 @@ impl CurvePointAdd<
             return lhs;
         }
         let mut lambda = TConstants::ZERO();
-        let (P, _, _, (_, _), _) = CParams::get_curve_paramters();
+        let (P, A, _, (_, _), _) = CParams::get_curve_paramters();
         if lhs == rhs {
             if lhs.y == CurvePointZeroable::zero().y {
                 return CurvePointZeroable::zero();
             } else {
-                // lambda = get_lambda_point_double(lhs, rhs);
-                return CurvePointZeroable::zero();
+                // TODO: Fix this. i think becuae egcd doesnt take traits 
+                let numerator_left = TModA::modular_mul(
+                    TConstants::THREE(), TModA::modular_mul(lhs.x, lhs.x, P), P
+                );
+                let numerator_right = A;
+                let numerator = TModA::modular_add(numerator_left, numerator_right, P);
+                let inv_denominator = egcd::mod_inv(
+                    P.into(), TModA::modular_mul(TConstants::TWO(), lhs.y, P).into()
+                )
+                    .into();
+                lambda = TModA::modular_mul(numerator, inv_denominator, P);
             }
         } else {
             if lhs.x == rhs.x {
@@ -80,14 +93,15 @@ impl CurvePointAdd<
             } else {
                 let numerator = TModA::modular_sub(rhs.y, lhs.y, P);
                 let inv_denominator = numerator;
-            // let inv_denominator = egcd::mod_inv(
-            //     // TODO: Fix this. i think becuae egcd doesnt take traits 
-            //     // V Bad. 
-            //     TIntoGCD::try_into(P).unwrap(),
-            //     TIntoGCD::try_into(TModA::modular_sub(rhs.x, lhs.x, P)).unwrap(),
-            // );
-            // lambda =
-            //     TModA::modular_mul(numerator, GCDintoT::try_into(inv_denominator).unwrap(), P);
+                // TODO: Fix this. i think becuae egcd doesnt take traits 
+                // it was OK as an excercise into concrete conversion
+                // but trait being asked all over the place ex. in ECCurvetraits
+                let inv_denominator = egcd::mod_inv(
+                    P.into(), TModA::modular_sub(rhs.x, lhs.x, P).into()
+                )
+                    .into();
+                // V Bad. 
+                lambda = TModA::modular_mul(numerator, inv_denominator, P);
             }
         }
         let x_r = TModA::modular_sub(
@@ -99,20 +113,15 @@ impl CurvePointAdd<
         CurvePoint { x: x_r, y: y_r }
     }
 }
-// fn get_lambda_point_double(lhs: CurvePoint, rhs: CurvePoint) -> u256 {
-//     // let numerator_left = THREE.modular_mul(lhs.x.modular_mul(lhs.x));
-//     // let numerator_right = secp256r1_constants::R1_A;
-//     // let numerator = numerator_left.modular_add(numerator_right);
-//     // let inv_denominator = egcd::mod_inv(secp256r1_constants::R1_P, TWO.modular_mul(lhs.y));
-//     // numerator.modular_mul(inv_denominator)
-//                 return CurvePointZeroable::zero();
-// }
 impl CurvePointAddEq<
     T,
     impl TDrop: Drop<T>,
     impl TCopy: Copy<T>,
     impl TRem: Rem<T>,
     impl TDiv: Div<T>,
+    // TODO: Fix this. i think becuae egcd doesnt take traits 
+    impl TIntoGCD: Into<T, u256>,
+    impl GCDIntoT: Into<u256, T>,
     impl TPartialEq: PartialEq<T>,
     impl TModA: ModularArithmetic<T>,
     impl CParams: CurveParameters<T>,
@@ -184,4 +193,5 @@ trait TYPEConstants<T> {
     fn ZERO() -> T;
     fn ONE() -> T;
     fn TWO() -> T;
+    fn THREE() -> T;
 }
