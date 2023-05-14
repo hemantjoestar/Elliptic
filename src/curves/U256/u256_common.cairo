@@ -1,4 +1,4 @@
-use ec_verify::curves::curve_traits::{ModularArithmetic, TYPEConstants};
+use Elliptic::curves::curve_traits::{ModularArithmetic, TYPEConstants};
 use integer::{
     u512_safe_div_rem_by_u256, u256_try_as_non_zero, u256_wide_mul, u256_overflow_sub,
     u256_overflowing_add

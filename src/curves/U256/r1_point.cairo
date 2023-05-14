@@ -1,4 +1,4 @@
-use ec_verify::curves::curve_traits::CurveParameters;
+use Elliptic::curves::curve_traits::CurveParameters;
 
 mod secp256r1_constants {
     const R1_P: u256 = 0xFFFFFFFF00000001000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF;

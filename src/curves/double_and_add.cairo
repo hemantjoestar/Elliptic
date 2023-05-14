@@ -1,8 +1,8 @@
-use ec_verify::curves::curve_traits::{
+use Elliptic::curves::curve_traits::{
     ECCurveTraits, ModularArithmetic, CurveParameters, TYPEConstants, CurvePoint
 };
 use zeroable::Zeroable;
-use ec_verify::egcd;
+use Elliptic::egcd;
 use traits::Into;
 
 impl ECCurveTraitsImpl<

@@ -1,7 +1,7 @@
-use ec_verify::curves::U256::u256_common;
-use ec_verify::curves::U256::r1_point::{secp256r1_constants, R1CurveParameters};
-use ec_verify::curves::curve_traits::{ECCurveTraits, CurvePoint};
-use ec_verify::curves::double_and_add::ECCurveTraitsImpl;
+use Elliptic::curves::U256::u256_common;
+use Elliptic::curves::U256::r1_point::{secp256r1_constants, R1CurveParameters};
+use Elliptic::curves::curve_traits::{ECCurveTraits, CurvePoint};
+use Elliptic::curves::double_and_add::ECCurveTraitsImpl;
 use result::ResultTrait;
 use debug::PrintTrait;
 
