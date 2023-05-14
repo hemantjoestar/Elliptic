@@ -1,0 +1,2 @@
+[crate_roots]
+ec_verify='src'
