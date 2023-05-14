@@ -41,7 +41,7 @@ impl ECCurveTraitsImpl<
     }
 }
 
-impl PointR1Add<
+impl CurvePointAdd<
     T,
     impl TDrop: Drop<T>,
     impl TCopy: Copy<T>,
@@ -107,7 +107,7 @@ impl PointR1Add<
 //     // numerator.modular_mul(inv_denominator)
 //                 return CurvePointZeroable::zero();
 // }
-impl PointR1AddEq<
+impl CurvePointAddEq<
     T,
     impl TDrop: Drop<T>,
     impl TCopy: Copy<T>,
@@ -121,7 +121,7 @@ impl PointR1AddEq<
 > of AddEq<CurvePoint<T>> {
     #[inline(always)]
     fn add_eq(ref self: CurvePoint<T>, other: CurvePoint<T>) {
-        self = PointR1Add::add(self, other);
+        self = CurvePointAdd::add(self, other);
     }
 }
 impl CurvePointZeroable<
