@@ -14,8 +14,8 @@ Available:
 Issues/Problems to fix:
 - Implementations not efficient. Tests will validate this and also gas required for tests. especially during signature verficiation
 - egcd is not robust and written assuming primes and not using traits. will remedy this
-- No message hashing inside the verification example. The cairo impl used to generate [sha256]https://github.com/hemantjoestar/sha256) hashes
-- Till i improve the ec add operation itll be difficult. i cant run complete sha + verify in a single test. My machine is getting overwhelmed. I dont have enough RAM and Swap. Please add `[ignore]` to tests in sig_ver if problems
+- No message hashing inside the verification example. The cairo impl used to generate [sha256](https://github.com/hemantjoestar/sha256) hashes
+- Till i improve the ec add operation itll be difficult. I intend to continue on this and push better impls. i cant run complete sha + verify in a single test. My machine is getting overwhelmed. I dont have enough RAM and Swap. Please add `[ignore]` to tests in sig_ver if problems
 
 For suggestions, suggestions and criticism regarding implementation and design, i would definitely like to hear them and improve from advice. Please raise a PR or One can ping [twitter](https://twitter.com/0xspleen) and discord @ 0xspleen#1434
 
