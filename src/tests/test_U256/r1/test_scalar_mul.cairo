@@ -1,23 +1,12 @@
-use Elliptic::curves::U256::u256_common;
-use Elliptic::curves::U256::r1_point::{secp256r1_constants, R1CurveParameters};
-use Elliptic::curves::curve_traits::{ECCurveTraits, CurvePoint};
-use Elliptic::curves::double_and_add::ECCurveTraitsImpl;
-use result::ResultTrait;
-use debug::PrintTrait;
+use Elliptic::tests::test_U256::r1::test_utilities::{
+    init_P256_R1_with_G, known_point_on_curve, point_mul
+};
+use Elliptic::curves::curve_traits::{CurvePoint};
 
-// NOTE: Not hexadecimal numbers. wasted my time
+fn mul(point: CurvePoint<u256>, scalar: u256) -> CurvePoint<u256> {
+    point_mul(point, scalar)
+}
 
-// helper functions 
-// to conduct test against standard curve with know Generator
-fn init_P256_R1_with_G() -> CurvePoint<u256> {
-    let x = secp256r1_constants::R1_G_X;
-    let y = secp256r1_constants::R1_G_Y;
-    ECCurveTraitsImpl::<u256>::new(x, y).unwrap()
-}
-// result to compare against
-fn known_point_on_curve(x: u256, y: u256) -> CurvePoint<u256> {
-    ECCurveTraitsImpl::<u256>::new(x, y).unwrap()
-}
 #[test]
 #[available_gas(4000000000)]
 fn gen_scalar_mul_1() {
@@ -27,7 +16,7 @@ fn gen_scalar_mul_1() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 1 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 1 Fail');
 }
 
 #[test]
@@ -39,7 +28,7 @@ fn gen_scalar_mul_2() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 2 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 2 Fail');
 }
 
 #[test]
@@ -51,7 +40,7 @@ fn gen_scalar_mul_3() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 3 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 3 Fail');
 }
 
 #[test]
@@ -63,7 +52,7 @@ fn gen_scalar_mul_4() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 4 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 4 Fail');
 }
 
 #[test]
@@ -75,7 +64,7 @@ fn gen_scalar_mul_5() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 5 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 5 Fail');
 }
 
 #[test]
@@ -87,7 +76,7 @@ fn gen_scalar_mul_6() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 6 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 6 Fail');
 }
 
 #[test]
@@ -99,7 +88,7 @@ fn gen_scalar_mul_7() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 7 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 7 Fail');
 }
 
 #[test]
@@ -111,7 +100,7 @@ fn gen_scalar_mul_8() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 8 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 8 Fail');
 }
 
 #[test]
@@ -123,7 +112,7 @@ fn gen_scalar_mul_9() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 9 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 9 Fail');
 }
 
 #[test]
@@ -135,7 +124,7 @@ fn gen_scalar_mul_10() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 10 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 10 Fail');
 }
 
 #[test]
@@ -147,7 +136,7 @@ fn gen_scalar_mul_11() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 11 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 11 Fail');
 }
 
 #[test]
@@ -159,7 +148,7 @@ fn gen_scalar_mul_12() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 12 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 12 Fail');
 }
 
 #[test]
@@ -171,7 +160,7 @@ fn gen_scalar_mul_13() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 13 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 13 Fail');
 }
 
 #[test]
@@ -183,7 +172,7 @@ fn gen_scalar_mul_14() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 14 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 14 Fail');
 }
 
 #[test]
@@ -195,7 +184,7 @@ fn gen_scalar_mul_15() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 15 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 15 Fail');
 }
 
 #[test]
@@ -207,7 +196,7 @@ fn gen_scalar_mul_16() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 16 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 16 Fail');
 }
 
 #[test]
@@ -219,7 +208,7 @@ fn gen_scalar_mul_17() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 17 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 17 Fail');
 }
 
 #[test]
@@ -231,7 +220,7 @@ fn gen_scalar_mul_18() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 18 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 18 Fail');
 }
 
 #[test]
@@ -243,7 +232,7 @@ fn gen_scalar_mul_19() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 19 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 19 Fail');
 }
 
 #[test]
@@ -255,7 +244,7 @@ fn gen_scalar_mul_20() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 20 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 20 Fail');
 }
 
 #[test]
@@ -267,7 +256,7 @@ fn gen_scalar_mul_112233445566778899() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 112233445566778899 Fail');
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 112233445566778899 Fail');
 }
 
 #[test]
@@ -279,6 +268,6 @@ fn gen_scalar_mul_112233445566778899112233445566778899() {
 
     let r1_gen = init_P256_R1_with_G();
     let gen_result = known_point_on_curve(x, y);
-    assert(r1_gen.scalar_mul(k) == gen_result, 'G_R1 * 1122.. Fail', );
+    assert(mul(r1_gen, k) == gen_result, 'G_R1 * 1122.. Fail', );
 }
 

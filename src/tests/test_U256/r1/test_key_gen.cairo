@@ -1,19 +1,10 @@
-use Elliptic::curves::U256::u256_common;
-use Elliptic::curves::U256::r1_point::{secp256r1_constants, R1CurveParameters};
-use Elliptic::curves::curve_traits::{ECCurveTraits, CurvePoint};
-use Elliptic::curves::double_and_add::ECCurveTraitsImpl;
-use result::ResultTrait;
-use debug::PrintTrait;
+use Elliptic::tests::test_U256::r1::test_utilities::{
+    init_P256_R1_with_G, known_point_on_curve, point_mul
+};
+use Elliptic::curves::curve_traits::{CurvePoint};
 
-
-// to conduct test against standard curve with know Generator
-fn init_P256_R1_with_G() -> CurvePoint<u256> {
-    let x = secp256r1_constants::R1_G_X;
-    let y = secp256r1_constants::R1_G_Y;
-    ECCurveTraitsImpl::<u256>::new(x, y).unwrap()
-}
-fn known_point_on_curve(x: u256, y: u256) -> CurvePoint<u256> {
-    ECCurveTraitsImpl::<u256>::new(x, y).unwrap()
+fn gen_public_key(point: CurvePoint<u256>, scalar: u256) -> CurvePoint<u256> {
+    point_mul(point, scalar)
 }
 
 #[test]
@@ -26,7 +17,8 @@ fn key_gen_1() {
     let r1_gen = init_P256_R1_with_G();
     let pair_1 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_1, 'key_gen_1 Fail');
+    // assert(r1_gen.scalar_mul(key) == pair_1, 'key_gen_1 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_1, 'key_gen_1 Fail');
 }
 
 #[test]
@@ -39,7 +31,7 @@ fn key_gen_2() {
     let r1_gen = init_P256_R1_with_G();
     let pair_2 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_2, 'key_gen_2 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_2, 'key_gen_2 Fail');
 }
 
 #[test]
@@ -52,7 +44,7 @@ fn key_gen_3() {
     let r1_gen = init_P256_R1_with_G();
     let pair_3 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_3, 'key_gen_3 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_3, 'key_gen_3 Fail');
 }
 
 #[test]
@@ -65,7 +57,7 @@ fn key_gen_4() {
     let r1_gen = init_P256_R1_with_G();
     let pair_4 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_4, 'key_gen_4 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_4, 'key_gen_4 Fail');
 }
 
 #[test]
@@ -78,7 +70,7 @@ fn key_gen_5() {
     let r1_gen = init_P256_R1_with_G();
     let pair_5 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_5, 'key_gen_5 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_5, 'key_gen_5 Fail');
 }
 
 #[test]
@@ -91,7 +83,7 @@ fn key_gen_6() {
     let r1_gen = init_P256_R1_with_G();
     let pair_6 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_6, 'key_gen_6 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_6, 'key_gen_6 Fail');
 }
 
 #[test]
@@ -104,7 +96,7 @@ fn key_gen_7() {
     let r1_gen = init_P256_R1_with_G();
     let pair_7 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_7, 'key_gen_7 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_7, 'key_gen_7 Fail');
 }
 
 #[test]
@@ -117,7 +109,7 @@ fn key_gen_8() {
     let r1_gen = init_P256_R1_with_G();
     let pair_8 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_8, 'key_gen_8 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_8, 'key_gen_8 Fail');
 }
 
 #[test]
@@ -130,7 +122,7 @@ fn key_gen_9() {
     let r1_gen = init_P256_R1_with_G();
     let pair_9 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_9, 'key_gen_9 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_9, 'key_gen_9 Fail');
 }
 #[test]
 #[available_gas(4000000000)]
@@ -142,5 +134,5 @@ fn key_gen_10() {
     let r1_gen = init_P256_R1_with_G();
     let pair_10 = known_point_on_curve(x: Qx, y: Qy);
     let key = d;
-    assert(r1_gen.scalar_mul(key) == pair_10, 'key_gen_10 Fail');
+    assert(gen_public_key(r1_gen, key) == pair_10, 'key_gen_10 Fail');
 }
