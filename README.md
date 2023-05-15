@@ -9,7 +9,7 @@ One can see the [tests](https://github.com/hemantjoestar/Elliptic/tree/master/sr
 
 Available:
 - key-gen, on curve verification. with respective nist test vectors
-- signing and verfification. need to add NIST test vectors
+- signing and signature verification. need to add NIST test vectors
 
 Issues/Problems to fix:
 - Implementations not efficient. Tests will validate this and also gas required for tests. especially during signature verficiation
