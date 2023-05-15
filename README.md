@@ -1,4 +1,4 @@
-Attempt at using using traits and impls to abstract EC functionality.
+Attempt at using using traits and impls to abstract EC functionality. A PoC.
 
 This wouldnt be possible without advanced u256 integer operations built by [orizi](https://github.com/orizi) , u256 literal by [greged93](https://github.com/greged93) and [Shahar Papini](https://github.com/spapinistarkware) for explanation on how to use the trait and impl system. Thank you very much. I couldnt get radix limb operations for modular u256 math to work. 
 
@@ -6,6 +6,7 @@ Thank you Cairo team for giving us this language, its design and for building in
 
 An impl of NIST-256 or seck256r1 is available and working.
 One can see the [tests](https://github.com/hemantjoestar/Elliptic/tree/master/src/tests/test_U256/r1) to use this implementation
+
 Available:
 - key-gen, on curve verification. with respective nist test vectors
 - signing and verfification. need to add NIST test vectors
