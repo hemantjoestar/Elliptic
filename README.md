@@ -1,4 +1,4 @@
-Attempt at using using traits and impls to abstract EC functionality. A PoC.
+Attempt at using using traits and impls to abstract EC functionality. A PoC. Requires the latest commit of Cairo.
 
 This wouldnt be possible without advanced u256 integer operations built by [orizi](https://github.com/orizi) , u256 literal by [greged93](https://github.com/greged93) and [Shahar Papini](https://github.com/spapinistarkware) for explanation on how to use the trait and impl system. Thank you very much. I couldnt get radix limb operations for modular u256 math to work. 
 
@@ -9,13 +9,13 @@ One can see the [tests](https://github.com/hemantjoestar/Elliptic/tree/master/sr
 
 Available:
 - key-gen, on curve verification. with respective nist test vectors
-- signing and verfification. need to add NIST test vectors
+- signing and signature verification. need to add NIST test vectors
 
 Issues/Problems to fix:
-- Implementations not efficient. Tests will validate this. especially during signature verficiation
-- egcd is not robust and written assuming primes and not using traits lead to a workaround
-- no message hashing inside the verification example. The cairo impl used to generate hashes is [here] (https://github.com/hemantjoestar/sha256)
-- Till i improve the ec add operation itll be difficult. i cant run complete sha + verify. My machine is getting overwhelmed. I dont have enough RAM and Swap. Please add [ignore] to tests in sig_ver if problems
+- Implementations not efficient. Tests will validate this and also gas required for tests. especially during signature verficiation
+- egcd is not robust and written assuming primes and not using traits. will remedy this
+- No message hashing inside the verification example. The cairo impl used to generate [sha256](https://github.com/hemantjoestar/sha256) hashes
+- Till i improve the ec add operation itll be difficult. I intend to continue on this and push better impls. i cant run complete sha + verify in a single test. My machine is getting overwhelmed. I dont have enough RAM and Swap. Please add `[ignore]` to tests in sig_ver if problems
 
 For suggestions, suggestions and criticism regarding implementation and design, i would definitely like to hear them and improve from advice. Please raise a PR or One can ping [twitter](https://twitter.com/0xspleen) and discord @ 0xspleen#1434
 
