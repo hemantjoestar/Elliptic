@@ -1,9 +1,9 @@
 use Elliptic::tests::test_U256::r1::test_utilities::{
     init_P256_R1_with_G, known_point_on_curve, point_mul
 };
-use Elliptic::curves::curve_traits::{CurvePoint};
+use Elliptic::curves::curve_traits::{AffinePoint};
 
-fn gen_public_key(point: CurvePoint<u256>, scalar: u256) -> CurvePoint<u256> {
+fn gen_public_key(point: AffinePoint<u256>, scalar: u256) -> AffinePoint<u256> {
     point_mul(point, scalar)
 }
 

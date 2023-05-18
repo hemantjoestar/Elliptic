@@ -37,7 +37,7 @@ impl U256Zeroable of Zeroable<u256> {
     }
     #[inline(always)]
     fn is_non_zero(self: u256) -> bool {
-        !self.is_zero()
+        !U256Zeroable::is_zero(self)
     }
 }
 

@@ -1,5 +1,5 @@
 use Elliptic::curves::curve_traits::{
-    ECCurveTraits, ModularArithmetic, CurveParameters, TYPEConstants, CurvePoint
+    ECCurveTraits, ModularArithmetic, CurveParameters, TYPEConstants, AffinePoint
 };
 use zeroable::Zeroable;
 use Elliptic::egcd;
@@ -21,7 +21,7 @@ impl ECCurveTraitsImpl<
     impl TZero: Zeroable<T>,
     impl TConstants: TYPEConstants<T>,
 > of ECCurveTraits<T> {
-    fn new(x: T, y: T) -> Result<CurvePoint<T>, felt252> {
+    fn new(x: T, y: T) -> Result<AffinePoint<T>, felt252> {
         // TODO: TO deciide to keep here or remove to seperate function
         // Initially was. Allows for modularity
         // But requires functions wil long signatures for traits passing
@@ -32,13 +32,13 @@ impl ECCurveTraitsImpl<
         let rhs_right = B;
         let rhs = TModA::modular_add(TModA::modular_add(rhs_left, rhs_centre, P), rhs_right, P);
         if lhs == rhs {
-            return Result::Ok(CurvePoint { x, y });
+            return Result::Ok(AffinePoint { x, y });
         }
         let err: felt252 = 'POINT_NOT_ON_CURVE'.into();
         Result::Err(err)
     }
-    fn scalar_mul(self: CurvePoint<T>, scalar: T) -> CurvePoint<T> {
-        let mut result = CurvePointZeroable::zero();
+    fn scalar_mul(self: AffinePoint<T>, scalar: T) -> AffinePoint<T> {
+        let mut result = AffinePointZeroable::zero();
         let mut tmp = self;
         let mut index = scalar;
         loop {
@@ -55,7 +55,7 @@ impl ECCurveTraitsImpl<
     }
 }
 
-impl CurvePointAdd<
+impl AffinePointAdd<
     T,
     impl TDrop: Drop<T>,
     impl TCopy: Copy<T>,
@@ -72,8 +72,8 @@ impl CurvePointAdd<
     impl CParams: CurveParameters<T>,
     impl TZero: Zeroable<T>,
     impl TConstants: TYPEConstants<T>,
-> of Add<CurvePoint<T>> {
-    fn add(lhs: CurvePoint<T>, rhs: CurvePoint<T>) -> CurvePoint<T> {
+> of Add<AffinePoint<T>> {
+    fn add(lhs: AffinePoint<T>, rhs: AffinePoint<T>) -> AffinePoint<T> {
         if lhs.is_zero() {
             return rhs;
         }
@@ -83,8 +83,8 @@ impl CurvePointAdd<
         let mut lambda = TConstants::ZERO();
         let (P, A, _, (_, _), _) = CParams::get_curve_paramters();
         if lhs == rhs {
-            if lhs.y == CurvePointZeroable::zero().y {
-                return CurvePointZeroable::zero();
+            if lhs.y == AffinePointZeroable::zero().y {
+                return AffinePointZeroable::zero();
             } else {
                 // TODO: Fix this. i think becuae egcd doesnt take traits 
                 let numerator_left = TModA::modular_mul(
@@ -100,7 +100,7 @@ impl CurvePointAdd<
             }
         } else {
             if lhs.x == rhs.x {
-                return CurvePointZeroable::zero();
+                return AffinePointZeroable::zero();
             } else {
                 let numerator = TModA::modular_sub(rhs.y, lhs.y, P);
                 let inv_denominator = numerator;
@@ -121,11 +121,11 @@ impl CurvePointAdd<
         let y_r = TModA::modular_sub(
             TModA::modular_mul(lambda, TModA::modular_sub(lhs.x, x_r, P), P), lhs.y, P
         );
-        CurvePoint { x: x_r, y: y_r }
+        AffinePoint { x: x_r, y: y_r }
     }
 }
 
-impl CurvePointAddEq<
+impl AffinePointAddEq<
     T,
     impl TDrop: Drop<T>,
     impl TCopy: Copy<T>,
@@ -139,29 +139,29 @@ impl CurvePointAddEq<
     impl CParams: CurveParameters<T>,
     impl TZero: Zeroable<T>,
     impl TConstants: TYPEConstants<T>,
-> of AddEq<CurvePoint<T>> {
+> of AddEq<AffinePoint<T>> {
     #[inline(always)]
-    fn add_eq(ref self: CurvePoint<T>, other: CurvePoint<T>) {
-        self = CurvePointAdd::add(self, other);
+    fn add_eq(ref self: AffinePoint<T>, other: AffinePoint<T>) {
+        self = AffinePointAdd::add(self, other);
     }
 }
 
-impl CurvePointZeroable<
+impl AffinePointZeroable<
     T,
     impl TDrop: Drop<T>,
     impl TCopy: Copy<T>,
     impl TZero: Zeroable<T>,
     impl TPartialEq: PartialEq<T>,
-> of Zeroable<CurvePoint<T>> {
-    fn zero() -> CurvePoint<T> {
-        CurvePoint { x: TZero::zero(), y: TZero::zero() }
+> of Zeroable<AffinePoint<T>> {
+    fn zero() -> AffinePoint<T> {
+        AffinePoint { x: TZero::zero(), y: TZero::zero() }
     }
     #[inline(always)]
-    fn is_zero(self: CurvePoint<T>) -> bool {
-        self == CurvePointZeroable::<T>::zero()
+    fn is_zero(self: AffinePoint<T>) -> bool {
+        self == AffinePointZeroable::<T>::zero()
     }
     #[inline(always)]
-    fn is_non_zero(self: CurvePoint<T>) -> bool {
+    fn is_non_zero(self: AffinePoint<T>) -> bool {
         !self.is_zero()
     }
 }

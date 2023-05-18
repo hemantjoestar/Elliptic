@@ -1,5 +1,5 @@
 #[derive(Drop, Copy, PartialEq)]
-struct CurvePoint<T> {
+struct AffinePoint<T> {
     x: T,
     y: T,
 }
@@ -15,8 +15,8 @@ trait CurveParameters<T> {
 }
 
 trait ECCurveTraits<T> {
-    fn new(x: T, y: T) -> Result<CurvePoint<T>, felt252>;
-    fn scalar_mul(self: CurvePoint<T>, scalar: T) -> CurvePoint<T>;
+    fn new(x: T, y: T) -> Result<AffinePoint<T>, felt252>;
+    fn scalar_mul(self: AffinePoint<T>, scalar: T) -> AffinePoint<T>;
 }
 
 trait TYPEConstants<T> {
